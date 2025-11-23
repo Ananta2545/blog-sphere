@@ -91,7 +91,7 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
           <button
             type="submit"
             disabled={isLoading}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-teal-600 dark:bg-teal-500 text-white rounded-xl font-medium hover:bg-teal-700 dark:hover:bg-teal-600 transition-colors duration-300 shadow-lg shadow-teal-500/20 dark:shadow-teal-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-teal-600 dark:bg-teal-500 text-white rounded-xl font-medium hover:bg-teal-700 dark:hover:bg-teal-600 transition-colors duration-300 shadow-lg shadow-teal-500/20 dark:shadow-teal-500/30 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {isLoading ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -106,7 +106,7 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
               type="button"
               onClick={handleCancel}
               disabled={isLoading}
-              className="px-4 py-3 bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-3 bg-gray-200 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-300 dark:hover:bg-slate-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>

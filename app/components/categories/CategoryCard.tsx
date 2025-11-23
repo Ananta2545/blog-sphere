@@ -43,14 +43,14 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
         <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => onEdit(category)}
-            className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-lg border border-gray-200 dark:border-slate-500 hover:border-teal-500 dark:hover:border-teal-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-300 text-sm font-medium"
+            className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-slate-600 text-gray-700 dark:text-gray-200 rounded-lg border border-gray-200 dark:border-slate-500 hover:border-teal-500 dark:hover:border-teal-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors duration-300 text-sm font-medium cursor-pointer"
           >
             <Edit className="w-4 h-4" />
             Edit
           </button>
           <button
             onClick={() => setShowDeleteConfirm(true)}
-            className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-slate-600 text-red-600 dark:text-red-400 rounded-lg border border-gray-200 dark:border-slate-500 hover:border-red-500 dark:hover:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-300 text-sm font-medium"
+            className="flex items-center justify-center gap-2 px-3 py-2 bg-white dark:bg-slate-600 text-red-600 dark:text-red-400 rounded-lg border border-gray-200 dark:border-slate-500 hover:border-red-500 dark:hover:border-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-300 text-sm font-medium cursor-pointer"
           >
             <Trash2 className="w-4 h-4" />
             Delete
@@ -64,13 +64,13 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={handleDelete}
-              className="py-2 px-3 bg-red-600 dark:bg-red-500 text-white rounded-lg font-medium hover:bg-red-700 dark:hover:bg-red-600 transition-colors duration-300 text-sm"
+              className="py-2 px-3 bg-red-600 dark:bg-red-500 text-white rounded-lg font-medium hover:bg-red-700 dark:hover:bg-red-600 transition-colors duration-300 text-sm cursor-pointer"
             >
               Yes
             </button>
             <button
               onClick={() => setShowDeleteConfirm(false)}
-              className="py-2 px-3 bg-gray-200 dark:bg-slate-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-slate-500 transition-colors duration-300 text-sm"
+              className="py-2 px-3 bg-gray-200 dark:bg-slate-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-slate-500 transition-colors duration-300 text-sm cursor-pointer"
             >
               Cancel
             </button>

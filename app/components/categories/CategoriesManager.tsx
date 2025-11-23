@@ -5,6 +5,7 @@ import { CategoryForm } from './CategoryForm';
 import { CategoryList } from './CategoryList';
 import { trpc } from '@/app/_trpc/client';
 import { Loader2, AlertCircle } from 'lucide-react';
+import { useToast } from '@/app/components/ui/ToastContainer';
 
 export interface Category {
   id: number;
@@ -15,40 +16,41 @@ export interface Category {
 
 export function CategoriesManager() {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const { showToast } = useToast();
 
   // tRPC queries and mutations
   const utils = trpc.useUtils();
   const { data: categories, isLoading, error } = trpc.category.getAll.useQuery();
 
   const createMutation = trpc.category.create.useMutation({
-    onSuccess: () => {
-      utils.category.getAll.invalidate();
-      alert('Category created successfully!');
+    onSuccess: async () => {
+      await utils.category.getAll.refetch();
+      showToast('Category created successfully!', 'success');
     },
     onError: (error) => {
-      alert(error.message || 'Failed to create category');
+      showToast(error.message || 'Failed to create category', 'error');
     },
   });
 
   const updateMutation = trpc.category.update.useMutation({
-    onSuccess: () => {
-      utils.category.getAll.invalidate();
+    onSuccess: async () => {
+      await utils.category.getAll.refetch();
       setEditingCategory(null);
-      alert('Category updated successfully!');
+      showToast('Category updated successfully!', 'success');
     },
     onError: (error) => {
-      alert(error.message || 'Failed to update category');
+      showToast(error.message || 'Failed to update category', 'error');
     },
   });
 
   const deleteMutation = trpc.category.delete.useMutation({
-    onSuccess: () => {
-      utils.category.getAll.invalidate();
-      utils.post.getAll.invalidate();
-      alert('Category deleted successfully!');
+    onSuccess: async () => {
+      await utils.category.getAll.refetch();
+      await utils.post.getAll.refetch();
+      showToast('Category deleted successfully!', 'success');
     },
     onError: (error) => {
-      alert(error.message || 'Failed to delete category');
+      showToast(error.message || 'Failed to delete category', 'error');
     },
   });
 
@@ -74,17 +76,6 @@ export function CategoriesManager() {
   };
 
   const handleDelete = async (id: number) => {
-    const category = categories?.find(cat => cat.id === id);
-    if (category && category.postCount > 0) {
-      if (!confirm(`This category has ${category.postCount} post(s). Are you sure you want to delete it? The posts will not be deleted, but this category will be removed from them.`)) {
-        return;
-      }
-    } else {
-      if (!confirm('Are you sure you want to delete this category?')) {
-        return;
-      }
-    }
-
     await deleteMutation.mutateAsync({ categoryId: id });
   };
 
