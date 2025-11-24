@@ -1,8 +1,6 @@
-// components/ui/DeleteConfirmationModal.tsx
 'use client';
 import { X, AlertTriangle } from 'lucide-react';
 import { useEffect } from 'react';
-
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -13,7 +11,6 @@ interface DeleteConfirmationModalProps {
   cancelText?: string;
   isDeleting?: boolean;
 }
-
 export function DeleteConfirmationModal({
   isOpen,
   onClose,
@@ -24,39 +21,32 @@ export function DeleteConfirmationModal({
   cancelText = 'Cancel',
   isDeleting = false,
 }: DeleteConfirmationModalProps) {
-  // Close on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
         onClose();
       }
     };
-
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
-      // Prevent body scroll when modal is open
       document.body.style.overflow = 'hidden';
     }
-
     return () => {
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
     };
   }, [isOpen, onClose]);
-
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
+      {}
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
-
-      {/* Modal */}
+      {}
       <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-md w-full p-6 transform transition-all animate-in fade-in zoom-in duration-200">
-        {/* Close button */}
+        {}
         <button
           onClick={onClose}
           disabled={isDeleting}
@@ -65,23 +55,19 @@ export function DeleteConfirmationModal({
         >
           <X className="w-5 h-5" />
         </button>
-
-        {/* Icon */}
+        {}
         <div className="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-red-100 dark:bg-red-900/30 rounded-full">
           <AlertTriangle className="w-6 h-6 text-red-600 dark:text-red-400" />
         </div>
-
-        {/* Title */}
+        {}
         <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 text-center mb-2">
           {title}
         </h2>
-
-        {/* Message */}
+        {}
         <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
           {message}
         </p>
-
-        {/* Actions */}
+        {}
         <div className="flex gap-3">
           <button
             onClick={onClose}

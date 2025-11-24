@@ -2,15 +2,12 @@
 import { EditorContent } from '@tiptap/react';
 import { useEffect, useState } from 'react';
 import type { Editor } from '@tiptap/react';
-
 interface EditorTextareaProps {
   editor: Editor | null;
 }
-
 export function EditorTextarea({ editor }: EditorTextareaProps) {
   const [mounted] = useState(true);
   const [stats, setStats] = useState({ chars: 0, words: 0 });
-
   useEffect(() => {
     if (!editor) return undefined;
     const updateStats = () => {
@@ -19,15 +16,12 @@ export function EditorTextarea({ editor }: EditorTextareaProps) {
       const chars = text.length;
       setStats({ chars, words });
     };
-
-    updateStats(); // initialize once
+    updateStats();
     editor.on('update', updateStats);
-
     return () => {
       editor.off('update', updateStats);
     };
   }, [editor]);
-
   if (!mounted || !editor) {
     return (
       <div className="bg-white dark:bg-slate-800 min-h-[500px] flex items-center justify-center transition-colors">
@@ -35,7 +29,6 @@ export function EditorTextarea({ editor }: EditorTextareaProps) {
       </div>
     );
   }
-
   return (
     <div className="flex flex-col">
       <div className="bg-white dark:bg-slate-800 p-4 min-h-[500px] transition-colors text-gray-900 dark:text-gray-100">

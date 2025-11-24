@@ -1,4 +1,3 @@
-// components/blog/BlogPreview.tsx
 'use client';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Clock, Tag, Edit, Send, AlertCircle, Loader2 } from 'lucide-react';
@@ -6,21 +5,16 @@ import { trpc } from '@/app/_trpc/client';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/app/components/ui/ToastContainer';
 import { useState } from 'react';
-
 interface BlogPreviewProps {
   postId: string;
 }
-
 export function BlogPreview({ postId }: BlogPreviewProps) {
   const router = useRouter();
   const { showToast } = useToast();
   const [isPublishing, setIsPublishing] = useState(false);
-
   const { data: post, isLoading, error } = trpc.post.getByIdIncludingDrafts.useQuery({ 
     postId: parseInt(postId) 
   });
-
-  // tRPC utilities and mutations
   const utils = trpc.useUtils();
   const updateMutation = trpc.post.update.useMutation({
     onSuccess: () => {
@@ -30,12 +24,9 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
       utils.post.getStats.invalidate();
     },
   });
-
   const handlePublish = async () => {
     if (!post) return;
-
     setIsPublishing(true);
-
     try {
       await updateMutation.mutateAsync({
         postId: parseInt(postId),
@@ -44,10 +35,7 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
         status: 'PUBLISHED',
         categoryIds: post.categories?.map(cat => cat.id) || [],
       });
-
       showToast('Post published successfully!', 'success');
-      
-      // Redirect to the published post after a short delay
       setTimeout(() => {
         router.push(`/blog/${postId}`);
       }, 1000);
@@ -59,7 +47,6 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
       setIsPublishing(false);
     }
   };
-
   if (isLoading) {
     return (
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
@@ -70,7 +57,6 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
       </div>
     );
   }
-
   if (error || !post) {
     return (
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
@@ -90,19 +76,15 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
       </div>
     );
   }
-
   const isDraft = post.status === 'DRAFT';
-  
-  // Format date
   const formattedDate = new Date(post.createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   });
-
   return (
     <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
-      {/* Preview Banner */}
+      {}
       <div className="bg-blue-50 dark:bg-blue-900/30 border-2 border-blue-200 dark:border-blue-700 rounded-xl p-4 mb-8 flex items-center justify-between transition-colors">
         <div className="flex items-center gap-3">
           <AlertCircle className="w-6 h-6 text-blue-600 dark:text-blue-400" />
@@ -119,8 +101,7 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
           Edit
         </Link>
       </div>
-
-      {/* Back Button */}
+      {}
       <Link
         href="/dashboard?tab=post-editor"
         className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 font-medium mb-8 transition-colors"
@@ -128,18 +109,16 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
         <ArrowLeft className="w-5 h-5" />
         Back to Editor
       </Link>
-
-      {/* Article Preview */}
+      {}
       <article className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden transition-colors">
         <div className="p-8 sm:p-12">
-          {/* Draft Badge */}
+          {}
           {isDraft && (
             <div className="inline-block bg-orange-500 dark:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-full mb-6">
               DRAFT - NOT PUBLISHED
             </div>
           )}
-
-          {/* Categories */}
+          {}
           <div className="flex flex-wrap gap-2 mb-6">
             {post.categories?.map((category) => (
               <span
@@ -151,13 +130,11 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
               </span>
             ))}
           </div>
-
-          {/* Title */}
+          {}
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
             {post.title}
           </h1>
-
-          {/* Meta Information */}
+          {}
           <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400 mb-8 pb-8 border-b border-gray-200 dark:border-slate-700">
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5" />
@@ -168,8 +145,7 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
               <span>{post.readingTimeMins || 0} min read</span>
             </div>
           </div>
-
-          {/* Content */}
+          {}
           <div
             className="prose prose-lg max-w-none dark:prose-invert
               prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-headings:font-bold
@@ -184,8 +160,7 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
           />
         </div>
       </article>
-
-      {/* Action Buttons */}
+      {}
       <div className="mt-8 flex gap-4 justify-center">
         <Link
           href={`/dashboard?tab=post-editor&postId=${postId}`}

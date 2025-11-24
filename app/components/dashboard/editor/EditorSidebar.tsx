@@ -1,13 +1,10 @@
-// components/dashboard/editor/EditorSidebar.tsx
 import { Folder, Calendar, Clock } from 'lucide-react';
-
 interface Category {
   id: number;
   name: string;
   slug: string;
   postCount: number;
 }
-
 interface EditorSidebarProps {
   categories: Category[];
   selectedCategoryIds: number[];
@@ -17,7 +14,6 @@ interface EditorSidebarProps {
   readingTimeMins: number;
   onReadingTimeChange: (mins: number) => void;
 }
-
 export function EditorSidebar({
   categories,
   selectedCategoryIds,
@@ -34,10 +30,8 @@ export function EditorSidebar({
       onCategoryChange([...selectedCategoryIds, categoryId]);
     }
   };
-
   return (
     <div className="space-y-6">
-      {/* Status */}
       <div className="bg-gray-50 dark:bg-slate-700 rounded-lg p-4 border border-gray-200 dark:border-slate-600 transition-colors">
         <div className="flex items-center gap-2 mb-3">
           <Calendar className="w-5 h-5 text-gray-600 dark:text-gray-400" />
@@ -52,8 +46,6 @@ export function EditorSidebar({
           <option value="PUBLISHED">Published</option>
         </select>
       </div>
-
-      {/* Reading Time */}
       <div className="bg-gray-50 dark:bg-slate-700 rounded-lg p-4 border border-gray-200 dark:border-slate-600 transition-colors">
         <div className="flex items-center gap-2 mb-3">
           <Clock className="w-5 h-5 text-gray-600 dark:text-gray-400" />
@@ -75,8 +67,6 @@ export function EditorSidebar({
           Estimated time to read this post
         </p>
       </div>
-
-      {/* Categories */}
       <div className="bg-gray-50 dark:bg-slate-700 rounded-lg p-4 border border-gray-200 dark:border-slate-600 transition-colors">
         <div className="flex items-center gap-2 mb-3">
           <Folder className="w-5 h-5 text-gray-600 dark:text-gray-400" />

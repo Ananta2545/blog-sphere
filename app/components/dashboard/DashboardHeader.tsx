@@ -1,4 +1,3 @@
-// components/dashboard/DashboardHeader.tsx
 export function DashboardHeader() {
   return (
     <div className="mb-6 sm:mb-8">

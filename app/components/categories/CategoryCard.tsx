@@ -1,26 +1,21 @@
-// components/categories/CategoryCard.tsx
 'use client';
 import { useState } from 'react';
 import { Folder, Edit, Trash2 } from 'lucide-react';
 import { Category } from './CategoriesManager';
-
 interface CategoryCardProps {
   category: Category;
   onEdit: (category: Category) => void;
   onDelete: (id: number) => void;
 }
-
 export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
   const handleDelete = () => {
     onDelete(category.id);
     setShowDeleteConfirm(false);
   };
-
   return (
     <div className="bg-gray-50 dark:bg-slate-700 rounded-xl p-4 border border-gray-200 dark:border-slate-600 hover:border-teal-300 dark:hover:border-teal-500 transition-all duration-300 group">
-      {/* Header */}
+      {}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-teal-600 dark:bg-teal-500 rounded-lg flex items-center justify-center shadow-lg dark:shadow-teal-500/30">
@@ -34,11 +29,9 @@ export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) 
           </div>
         </div>
       </div>
-
-      {/* Description */}
+      {}
       <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">{category.description}</p>
-
-      {/* Actions */}
+      {}
       {!showDeleteConfirm ? (
         <div className="grid grid-cols-2 gap-2">
           <button

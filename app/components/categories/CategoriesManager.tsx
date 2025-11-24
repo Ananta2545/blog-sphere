@@ -5,22 +5,17 @@ import { CategoryList } from './CategoryList';
 import { trpc } from '@/app/_trpc/client';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { useToast } from '@/app/components/ui/ToastContainer';
-
 export interface Category {
   id: number;
   name: string;
   description: string | null;
   postCount: number;
 }
-
 export function CategoriesManager() {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const { showToast } = useToast();
-
-  // tRPC queries and mutations
   const utils = trpc.useUtils();
   const { data: categories, isLoading, error } = trpc.category.getAll.useQuery();
-
   const createMutation = trpc.category.create.useMutation({
     onSuccess: async () => {
       await utils.category.getAll.refetch();
@@ -30,7 +25,6 @@ export function CategoriesManager() {
       showToast(error.message || 'Failed to create category', 'error');
     },
   });
-
   const updateMutation = trpc.category.update.useMutation({
     onSuccess: async () => {
       await utils.category.getAll.refetch();
@@ -41,7 +35,6 @@ export function CategoriesManager() {
       showToast(error.message || 'Failed to update category', 'error');
     },
   });
-
   const deleteMutation = trpc.category.delete.useMutation({
     onSuccess: async () => {
       await utils.category.getAll.refetch();
@@ -52,18 +45,15 @@ export function CategoriesManager() {
       showToast(error.message || 'Failed to delete category', 'error');
     },
   });
-
   const handleCreate = async (name: string, description: string) => {
     await createMutation.mutateAsync({
       name,
       description: description || undefined,
     });
   };
-
   const handleEdit = (category: Category) => {
     setEditingCategory(category);
   };
-
   const handleUpdate = async (name: string, description: string) => {
     if (editingCategory) {
       await updateMutation.mutateAsync({
@@ -73,16 +63,12 @@ export function CategoriesManager() {
       });
     }
   };
-
   const handleDelete = async (id: number) => {
     await deleteMutation.mutateAsync({ categoryId: id });
   };
-
   const handleCancelEdit = () => {
     setEditingCategory(null);
   };
-
-  // Loading state
   if (isLoading) {
     return (
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
@@ -93,8 +79,6 @@ export function CategoriesManager() {
       </div>
     );
   }
-
-  // Error state
   if (error) {
     return (
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
@@ -106,18 +90,14 @@ export function CategoriesManager() {
       </div>
     );
   }
-
   return (
     <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
       <div className="mb-12">
         <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">Categories</h1>
         <p className="text-gray-600 dark:text-gray-400 text-lg">Organize your blog posts with categories</p>
       </div>
-
-      {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Category Form */}
+        {}
         <div className="lg:col-span-1">
           <CategoryForm
             editingCategory={editingCategory}
@@ -126,8 +106,7 @@ export function CategoriesManager() {
             isLoading={createMutation.isPending || updateMutation.isPending}
           />
         </div>
-
-        {/* Category List */}
+        {}
         <div className="lg:col-span-2">
           <CategoryList
             categories={categories || []}

@@ -1,6 +1,4 @@
 import { z } from "zod";
-
-// Schema for creating a new post
 export const createPostSchema = z.object({
   title: z
     .string()
@@ -23,8 +21,6 @@ export const createPostSchema = z.object({
     .optional()
     .default([]),
 });
-
-// Schema for updating an existing post
 export const updatePostSchema = z.object({
   postId: z.number().int().positive("Post ID must be a positive integer"),
   title: z
@@ -49,8 +45,6 @@ export const updatePostSchema = z.object({
     .array(z.number().int().positive())
     .optional(),
 });
-
-// Schema for filtering and searching posts
 export const getPostsFilterSchema = z.object({
   categorySlug: z.string().optional(),
   searchQuery: z.string().optional(),
@@ -58,23 +52,15 @@ export const getPostsFilterSchema = z.object({
   limit: z.number().int().positive().max(100).default(10),
   status: z.enum(["DRAFT", "PUBLISHED", "ALL"]).default("PUBLISHED"),
 });
-
-// Schema for getting a single post by slug
 export const getPostBySlugSchema = z.object({
   slug: z.string().min(1, "Slug is required"),
 });
-
-// Schema for getting a post by ID
 export const getPostByIdSchema = z.object({
   postId: z.number().int().positive("Post ID must be a positive integer"),
 });
-
-// Schema for deleting a post
 export const deletePostSchema = z.object({
   postId: z.number().int().positive("Post ID must be a positive integer"),
 });
-
-// Type exports for use in components
 export type CreatePostInput = z.infer<typeof createPostSchema>;
 export type UpdatePostInput = z.infer<typeof updatePostSchema>;
 export type GetPostsFilterInput = z.infer<typeof getPostsFilterSchema>;

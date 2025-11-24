@@ -1,11 +1,8 @@
-// components/blog/StatusToggle.tsx
 import { CheckCircle, FileEdit, List } from 'lucide-react';
-
 interface StatusToggleProps {
   statusFilter: 'all' | 'DRAFT' | 'PUBLISHED';
   onStatusChange: (status: 'all' | 'DRAFT' | 'PUBLISHED') => void;
 }
-
 export function StatusToggle({ statusFilter, onStatusChange }: StatusToggleProps) {
   return (
     <div className="flex items-center gap-2 bg-white dark:bg-slate-800 rounded-full p-1.5 shadow-sm border border-gray-200 dark:border-slate-700 transition-colors">

@@ -1,16 +1,12 @@
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
-
 export function Footer() {
   const currentYear = new Date().getFullYear();
-
   return (
     <footer className="border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors">
       <div className="container mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-        
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4 text-center sm:text-left">
-          
-          {/* Brand */}
+          {}
           <div className="flex flex-col items-center sm:items-start">
             <Link
               href="/"
@@ -25,8 +21,7 @@ export function Footer() {
               A modern blogging platform for creators and storytellers.
             </p>
           </div>
-
-          {/* Product */}
+          {}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900 dark:text-gray-100">
               Product
@@ -40,8 +35,7 @@ export function Footer() {
               </Link>
             </nav>
           </div>
-
-          {/* Company */}
+          {}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900 dark:text-gray-100">
               Company
@@ -56,8 +50,7 @@ export function Footer() {
             </nav>
           </div>
         </div>
-
-        {/* Copyright */}
+        {}
         <div className="mt-12 border-t border-gray-100 dark:border-slate-800 pt-8">
           <p className="text-center text-sm text-gray-400 dark:text-gray-500">
             &copy; {currentYear} BlogSphere. All rights reserved.

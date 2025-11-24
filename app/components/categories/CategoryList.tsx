@@ -1,15 +1,12 @@
-// components/categories/CategoryList.tsx
 'use client';
 import { CategoryCard } from './CategoryCard';
 import { Category } from './CategoriesManager';
-
 interface CategoryListProps {
   categories: Category[];
   onEdit: (category: Category) => void;
   onDelete: (id: number) => void;
   isDeleting?: boolean;
 }
-
 export function CategoryList({ categories, onEdit, onDelete }: CategoryListProps) {
   return (
     <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 transition-colors">
@@ -19,7 +16,6 @@ export function CategoryList({ categories, onEdit, onDelete }: CategoryListProps
           {categories.length}
         </span>
       </div>
-
       {Array.isArray(categories) && categories.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {categories.map((category) => (

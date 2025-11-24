@@ -1,6 +1,4 @@
-// components/dashboard/PostEditorTab.tsx
 'use client';
-
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { EditorToolbar } from './editor/EditorToolbar';
@@ -19,7 +17,6 @@ import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import { trpc } from '@/app/_trpc/client';
 import { useEditorState } from '@/app/store/useAppStore';
-
 export function PostEditorTab() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -29,8 +26,6 @@ export function PostEditorTab() {
   const [isPreview, setIsPreview] = useState(false);
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
-  
-  // Zustand state
   const {
     editingPostId,
     title,
@@ -46,20 +41,12 @@ export function PostEditorTab() {
     setReadingTimeMins,
     resetEditor,
   } = useEditorState();
-
-  // tRPC hooks
   const utils = trpc.useUtils();
-  
-  // Fetch post if editing (including drafts for dashboard)
   const { data: postData, isLoading: postLoading } = trpc.post.getByIdIncludingDrafts.useQuery(
     { postId: postId! },
     { enabled: !!postId }
   );
-
-  // Fetch categories for sidebar
   const { data: categories } = trpc.category.getAll.useQuery();
-
-  // Create mutation
   const createMutation = trpc.post.create.useMutation({
     onSuccess: () => {
       utils.post.getAll.invalidate();
@@ -69,8 +56,6 @@ export function PostEditorTab() {
       console.error('Create mutation error:', error);
     },
   });
-
-  // Update mutation
   const updateMutation = trpc.post.update.useMutation({
     onSuccess: () => {
       utils.post.getAll.invalidate();
@@ -79,8 +64,6 @@ export function PostEditorTab() {
       utils.post.getStats.invalidate();
     },
   });
-
-  // Initialize TipTap editor
   const editor = useEditor({
     immediatelyRender: false,
     editable: true,
@@ -113,8 +96,6 @@ export function PostEditorTab() {
       setContent(html);
     },
   });
-
-  // Load existing post data when postId changes
   useEffect(() => {
     if (postData && postId) {
       setEditingPost(postId);
@@ -123,50 +104,37 @@ export function PostEditorTab() {
       setStatus(postData.status || 'DRAFT');
       setSelectedCategories(postData.categories?.map(cat => cat.id) || []);
       setReadingTimeMins(postData.readingTimeMins || 5);
-      
       if (editor && !editor.isDestroyed) {
         editor.commands.setContent(postData.content || '');
       }
     } else if (!postId && editingPostId) {
-      // Reset when creating new post
       resetEditor();
       if (editor && !editor.isDestroyed) {
         editor.commands.setContent('');
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postData, postId]);
-
-  // Separate effect to update editor content when editor becomes available
   useEffect(() => {
     if (editor && !editor.isDestroyed && content) {
-      // Only update if editor content is different from stored content
       const currentContent = editor.getHTML();
       if (currentContent !== content) {
         editor.commands.setContent(content);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor]);
-
   const handleSave = async (publishNow: boolean = false) => {
     if (!title || !title.trim()) {
       showToast('Please enter a title', 'error');
       return;
     }
-
     if(publishNow) setPublishing(true);
     else setSaving(true);
-    
-    // Check if content is empty or just empty HTML tags
     const cleanContent = content.replace(/<\/?[^>]+(>|$)/g, "").trim();
     if (!cleanContent) {
       showToast('Please enter some content', 'error');
       return;
     }
-
     const postStatus = publishNow ? ('PUBLISHED' as const) : ('DRAFT' as const);
-    
     const postData = {
       title: title.trim(),
       content: content,
@@ -174,19 +142,15 @@ export function PostEditorTab() {
       readingTimeMins: readingTimeMins,
       categoryIds: selectedCategoryIds.length > 0 ? selectedCategoryIds : [],
     };
-
     try {
       if (editingPostId && postId) {
-        // Update existing post
         await updateMutation.mutateAsync({
           ...postData,
           postId: editingPostId,
         });
-        
         if (publishNow) {
           showToast('Post published successfully!', 'success');
           setStatus('PUBLISHED');
-          // Open the published post in a new tab
           setTimeout(() => {
             window.open(`/blog/${editingPostId}`, '_blank');
           }, 500);
@@ -195,22 +159,17 @@ export function PostEditorTab() {
           setStatus('DRAFT');
         }
       } else {
-        // Create new post
         const newPost = await createMutation.mutateAsync(postData);
-        
         if (newPost && newPost.id) {
           setEditingPost(newPost.id);
-          
           if (publishNow) {
             showToast('Post published successfully!', 'success');
-            // Redirect to edit the newly created post
             router.push(`/dashboard?tab=post-editor&postId=${newPost.id}`);
             setTimeout(() => {
               window.open(`/blog/${newPost.id}`, '_blank');
             }, 500);
           } else {
             showToast('Post created as draft!', 'success');
-            // Redirect to edit the newly created post
             router.push(`/dashboard?tab=post-editor&postId=${newPost.id}`);
           }
         } else {
@@ -226,9 +185,7 @@ export function PostEditorTab() {
       setPublishing(false);
     }
   };
-
   const handlePublish = () => handleSave(true);
-
   if (postLoading) {
     return (
       <div className="bg-white dark:bg-slate-800 rounded-lg shadow dark:shadow-slate-900/50 transition-colors p-12">
@@ -239,7 +196,6 @@ export function PostEditorTab() {
       </div>
     );
   }
-
   return (
     <div className="bg-white dark:bg-slate-800 rounded-lg shadow dark:shadow-slate-900/50 transition-colors">
       <div className="border-b border-gray-200 dark:border-slate-700 px-3 sm:px-4 md:px-6 py-3 sm:py-4 transition-colors">
@@ -278,7 +234,6 @@ export function PostEditorTab() {
               <span className="hidden sm:inline">Save Draft</span>
               <span className="sm:hidden">Save</span>
             </Button>
-
             <Button
               onClick={handlePublish}
               disabled={publishing}
@@ -290,12 +245,9 @@ export function PostEditorTab() {
           </div>
         </div>
       </div>
-
       <div className="flex flex-col lg:grid lg:grid-cols-3 gap-4 sm:gap-6 p-3 sm:p-4 md:p-6">
-        {/* Main Editor */}
         <div className="lg:col-span-2 space-y-4 sm:space-y-6 order-2 lg:order-1">
           {isPreview ? (
-            /* Preview Mode */
             <div className="bg-white dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-700 p-4 sm:p-6 md:p-8 transition-colors">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-gray-900 dark:text-gray-100">{title || 'Untitled Post'}</h1>
               <div 
@@ -304,9 +256,7 @@ export function PostEditorTab() {
               />
             </div>
           ) : (
-            /* Edit Mode */
             <>
-              {/* Title Input */}
               <div>
                 <input
                   type="text"
@@ -316,8 +266,6 @@ export function PostEditorTab() {
                   className="w-full text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold border-none focus:outline-none focus:ring-0 bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-600 p-2 sm:p-0"
                 />
               </div>
-
-              {/* Rich Text Editor */}
               <div className="border border-gray-200 dark:border-slate-700 rounded-lg overflow-hidden transition-colors">
                 <EditorToolbar editor={editor} />
                 <EditorTextarea editor={editor} />
@@ -325,8 +273,6 @@ export function PostEditorTab() {
             </>
           )}
         </div>
-
-        {/* Sidebar */}
         <div className="lg:col-span-1 order-1 lg:order-2">
           <EditorSidebar
             categories={categories || []}

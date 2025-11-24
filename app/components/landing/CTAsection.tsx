@@ -1,7 +1,5 @@
-// components/Landing/CTASection.tsx
 import { Button } from '@/app/components/ui/Button';
 import Link from 'next/link';
-
 export function CTASection() {
   return (
     <section className="py-20 bg-white dark:bg-slate-900 transition-colors">
@@ -12,11 +10,9 @@ export function CTASection() {
               Ready to Start Blogging?
             </h2>
           </div>
-          
           <p className="mt-4 text-base text-white/90 max-w-2xl mx-auto">
             Join thousands of creators sharing their stories. Start your blogging journey today with our powerful and intuitive platform.
           </p>
-
           <div className="mt-8">
             <Link href="/dashboard">
               <Button

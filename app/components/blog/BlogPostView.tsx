@@ -1,18 +1,14 @@
-// components/blog/BlogPostView.tsx
 'use client';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Clock, Tag, Edit, Loader2, Eye } from 'lucide-react';
 import { trpc } from '@/app/_trpc/client';
-
 interface BlogPostViewProps {
   postId: string;
 }
-
 export function BlogPostView({ postId }: BlogPostViewProps) {
   const { data: post, isLoading, error } = trpc.post.getById.useQuery({ 
     postId: parseInt(postId) 
   });
-
   if (isLoading) {
     return (
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
@@ -23,10 +19,8 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
       </div>
     );
   }
-
   if (error || !post) {
     const isDraftError = error?.message?.includes('not published');
-    
     return (
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center">
@@ -39,7 +33,6 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
               : error?.message || 'The blog post you\'re looking for doesn\'t exist.'
             }
           </p>
-          
           <div className="flex flex-col items-center gap-4">
             {isDraftError && (
               <Link
@@ -68,17 +61,14 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
       </div>
     );
   }
-
-  // Format date
   const formattedDate = new Date(post.createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   });
-
   return (
     <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
-      {/* Back Button */}
+      {}
       <Link
         href="/blog"
         className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 font-medium mb-8 transition-colors"
@@ -86,8 +76,7 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
         <ArrowLeft className="w-5 h-5" />
         Back to Blog
       </Link>
-
-      {/* Draft Badge */}
+      {}
       {post.status === 'DRAFT' && (
         <div className="mb-4">
           <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 border border-yellow-300">
@@ -95,11 +84,10 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
           </span>
         </div>
       )}
-
-      {/* Article Header */}
+      {}
       <article className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 overflow-hidden transition-colors">
         <div className="p-8 sm:p-12">
-          {/* Categories */}
+          {}
           <div className="flex flex-wrap gap-2 mb-6">
             {post.categories?.map((category) => (
               <span
@@ -111,13 +99,11 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
               </span>
             ))}
           </div>
-
-          {/* Title */}
+          {}
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
             {post.title}
           </h1>
-
-          {/* Meta Information */}
+          {}
           <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400 mb-8 pb-8 border-b border-gray-200 dark:border-slate-700">
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5" />
@@ -128,8 +114,7 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
               <span>{post.readingTimeMins || 0} min read</span>
             </div>
           </div>
-
-          {/* Content */}
+          {}
           <div
             className="prose prose-lg max-w-none dark:prose-invert
               prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-headings:font-bold
@@ -144,8 +129,7 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
           />
         </div>
       </article>
-
-      {/* Footer Section */}
+      {}
       <div className="mt-12 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-8 transition-colors">
         <div className="flex items-center justify-between">
           <div>
@@ -166,8 +150,7 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
           </Link>
         </div>
       </div>
-
-      {/* Edit Button for Admins */}
+      {}
       <div className="mt-8 text-center">
         <Link
           href={`/dashboard?tab=editor&postId=${postId}`}

@@ -1,23 +1,17 @@
-// components/categories/CategoryForm.tsx
 'use client';
 import { useState, useEffect } from 'react';
 import { Save, X, Loader2 } from 'lucide-react';
 import { Category } from './CategoriesManager';
-
 interface CategoryFormProps {
   onSubmit: (name: string, description: string) => void;
   onCancel?: () => void;
   editingCategory?: Category | null;
   isLoading?: boolean;
 }
-
 export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }: CategoryFormProps) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-
-  // Sync form state with external editing category
   useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect */
     if (editingCategory) {
       setName(editingCategory.name);
       setDescription(editingCategory.description || '');
@@ -25,9 +19,7 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
       setName('');
       setDescription('');
     }
-    /* eslint-enable react-hooks/set-state-in-effect */
   }, [editingCategory]);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
@@ -38,7 +30,6 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
       }
     }
   };
-
   const handleCancel = () => {
     setName('');
     setDescription('');
@@ -46,15 +37,13 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
       onCancel();
     }
   };
-
   return (
     <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 sticky top-20 transition-colors">
       <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
         {editingCategory ? 'Edit Category' : 'New Category'}
       </h2>
-      
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Name Input */}
+        {}
         <div>
           <label htmlFor="category-name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Name
@@ -69,8 +58,7 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
             required
           />
         </div>
-
-        {/* Description Input */}
+        {}
         <div>
           <label htmlFor="category-description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Description
@@ -85,8 +73,7 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
             required
           />
         </div>
-
-        {/* Action Buttons */}
+        {}
         <div className="flex gap-2">
           <button
             type="submit"
@@ -100,7 +87,6 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
             )}
             {editingCategory ? 'Update' : 'Create'}
           </button>
-          
           {editingCategory && onCancel && (
             <button
               type="button"

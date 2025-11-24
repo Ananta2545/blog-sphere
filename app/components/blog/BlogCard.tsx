@@ -1,8 +1,6 @@
-// components/blog/BlogCard.tsx
 'use client';
 import Link from 'next/link';
 import { Calendar, Clock, Tag, Edit, Trash2, Eye } from 'lucide-react';
-
 interface BlogCardProps {
   blog: {
     id: number;
@@ -15,27 +13,23 @@ interface BlogCardProps {
   };
   onDelete?: (id: number) => void;
 }
-
 export function BlogCard({ blog, onDelete }: BlogCardProps) {
   const isDraft = blog.status === 'draft';
-  
   const handleDelete = () => {
     if (onDelete) {
       onDelete(blog.id);
     }
   };
-  
   return (
     <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-lg dark:shadow-slate-900/50 dark:hover:shadow-slate-900/70 transition-all duration-300 border border-gray-100 dark:border-slate-700 overflow-hidden group">
-      {/* Status Badge */}
+      {}
       {isDraft && (
         <div className="bg-orange-500 dark:bg-orange-600 text-white text-xs font-semibold px-3 py-1 text-center">
           DRAFT
         </div>
       )}
-      
       <div className="p-6">
-        {/* Categories */}
+        {}
         <div className="flex flex-wrap gap-2 mb-4">
           {Array.isArray(blog.categories) && blog.categories.map((category, index) => (
             <span
@@ -47,18 +41,15 @@ export function BlogCard({ blog, onDelete }: BlogCardProps) {
             </span>
           ))}
         </div>
-
-        {/* Title */}
+        {}
         <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors line-clamp-2">
           {blog.title}
         </h3>
-
-        {/* Excerpt */}
+        {}
         <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
           {blog.excerpt}
         </p>
-
-        {/* Meta Information */}
+        {}
         <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-500 mb-4">
           <div className="flex items-center gap-1">
             <Calendar className="w-4 h-4" />
@@ -69,8 +60,7 @@ export function BlogCard({ blog, onDelete }: BlogCardProps) {
             <span>{blog.readTime}</span>
           </div>
         </div>
-
-        {/* Action Buttons */}
+        {}
         <div className="space-y-2">
           {isDraft ? (
             <>
@@ -106,8 +96,7 @@ export function BlogCard({ blog, onDelete }: BlogCardProps) {
               </Link>
             </>
           )}
-          
-          {/* Delete Button */}
+          {}
           <button
             onClick={handleDelete}
             className="w-full py-2.5 px-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl font-medium hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer"

@@ -2,7 +2,6 @@ import { pgTable, integer, primaryKey } from "drizzle-orm/pg-core";
 import { posts } from "./posts";
 import { categories } from "./categories";
 import { relations } from "drizzle-orm";
-
 export const postCategories = pgTable(
   "post_categories",
   {
@@ -17,8 +16,6 @@ export const postCategories = pgTable(
     pk: primaryKey({ columns: [table.postId, table.categoryId] }),
   })
 );
-
-// Relations for postCategories (junction table)
 export const postCategoriesRelations = relations(postCategories, ({ one }) => ({
   post: one(posts, {
     fields: [postCategories.postId],

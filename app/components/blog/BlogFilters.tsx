@@ -1,12 +1,9 @@
-// components/blog/BlogFilters.tsx
 import { Filter } from 'lucide-react';
-
 interface BlogFiltersProps {
   categories: string[];
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
 }
-
 export function BlogFilters({ categories, selectedCategory, onCategoryChange }: BlogFiltersProps) {
   return (
     <div className="flex items-center gap-3 flex-wrap">
