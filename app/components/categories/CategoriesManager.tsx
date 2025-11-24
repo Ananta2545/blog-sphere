@@ -1,4 +1,3 @@
-// components/categories/CategoriesManager.tsx
 'use client';
 import { useState } from 'react';
 import { CategoryForm } from './CategoryForm';

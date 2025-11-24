@@ -106,16 +106,6 @@ export function EditorSidebar({
           )}
         </div>
       </div>
-
-      {/* Help Text */}
-      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800 transition-colors">
-        <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-300 mb-2">💡 Quick Tips</h3>
-        <ul className="text-xs text-blue-800 dark:text-blue-400 space-y-1">
-          <li>• Select multiple categories for your post</li>
-          <li>• Use Draft status while writing</li>
-          <li>• Publish when ready to make it public</li>
-        </ul>
-      </div>
     </div>
   );
 }
