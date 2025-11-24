@@ -1,9 +1,11 @@
 import { BarChart3, PenSquare } from 'lucide-react';
 import { cn } from '@/app/lib/utils';
+
 interface DashboardTabsProps {
   activeTab: 'analytics' | 'post-editor';
   onTabChange: (tab: 'analytics' | 'post-editor') => void;
 }
+
 export function DashboardTabs({ activeTab, onTabChange }: DashboardTabsProps) {
   return (
     <div className="border-b border-gray-200 dark:border-slate-700 transition-colors overflow-x-auto">

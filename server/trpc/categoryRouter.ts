@@ -10,6 +10,7 @@ import { categories, postCategories } from "@/db/schema";
 import { eq, sql, count } from "drizzle-orm";
 import { slugify } from "../utils/slugify";
 import { TRPCError } from "@trpc/server";
+
 export const categoryRouter = router({
   getAll: publicProcedure.query(async ({ ctx }) => {
     const allCategories = await ctx.db.select().from(categories);
@@ -27,6 +28,7 @@ export const categoryRouter = router({
     );
     return categoriesWithCount;
   }),
+
   getBySlug: publicProcedure
     .input(getCategoryBySlugSchema)
     .query(async ({ ctx, input }) => {
@@ -50,6 +52,7 @@ export const categoryRouter = router({
         postCount: postCount?.count || 0,
       };
     }),
+
   getById: publicProcedure
     .input(getCategoryByIdSchema)
     .query(async ({ ctx, input }) => {
@@ -66,6 +69,7 @@ export const categoryRouter = router({
       }
       return category;
     }),
+
   create: publicProcedure
     .input(createCategorySchema)
     .mutation(async ({ ctx, input }) => {
@@ -91,6 +95,7 @@ export const categoryRouter = router({
         .returning();
       return category;
     }),
+
   update: publicProcedure
     .input(updateCategorySchema)
     .mutation(async ({ ctx, input }) => {
@@ -135,6 +140,7 @@ export const categoryRouter = router({
         .returning();
       return updatedCategory;
     }),
+    
   delete: publicProcedure
     .input(deleteCategorySchema)
     .mutation(async ({ ctx, input }) => {

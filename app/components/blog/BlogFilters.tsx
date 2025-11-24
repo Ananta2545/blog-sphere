@@ -1,10 +1,13 @@
 import { Filter } from 'lucide-react';
+
 interface BlogFiltersProps {
   categories: string[];
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
 }
+
 export function BlogFilters({ categories, selectedCategory, onCategoryChange }: BlogFiltersProps) {
+  
   return (
     <div className="flex items-center gap-3 flex-wrap">
       <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">

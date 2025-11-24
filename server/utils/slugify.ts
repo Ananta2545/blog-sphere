@@ -8,6 +8,7 @@ export const slugify = (input: string): string => {
     .replace(/^-+/, "")                
     .replace(/-+$/, "");               
 };
+
 export const generateUniqueSlug = (
   input: string,
   existingSlugs: string[] = []

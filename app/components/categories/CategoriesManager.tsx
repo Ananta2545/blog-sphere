@@ -5,18 +5,21 @@ import { CategoryList } from './CategoryList';
 import { trpc } from '@/app/_trpc/client';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { useToast } from '@/app/components/ui/ToastContainer';
+
 export interface Category {
   id: number;
   name: string;
   description: string | null;
   postCount: number;
 }
+
 export function CategoriesManager() {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [showForm, setShowForm] = useState(false);
   const { showToast } = useToast();
   const utils = trpc.useUtils();
   const { data: categories, isLoading, error } = trpc.category.getAll.useQuery();
+
   const createMutation = trpc.category.create.useMutation({
     onSuccess: async () => {
       await utils.category.getAll.refetch();
@@ -26,6 +29,7 @@ export function CategoriesManager() {
       showToast(error.message || 'Failed to create category', 'error');
     },
   });
+
   const updateMutation = trpc.category.update.useMutation({
     onSuccess: async () => {
       await utils.category.getAll.refetch();
@@ -36,6 +40,7 @@ export function CategoriesManager() {
       showToast(error.message || 'Failed to update category', 'error');
     },
   });
+
   const deleteMutation = trpc.category.delete.useMutation({
     onSuccess: async () => {
       await utils.category.getAll.refetch();
@@ -46,6 +51,7 @@ export function CategoriesManager() {
       showToast(error.message || 'Failed to delete category', 'error');
     },
   });
+
   const handleCreate = async (name: string, description: string) => {
     await createMutation.mutateAsync({
       name,
@@ -53,10 +59,12 @@ export function CategoriesManager() {
     });
     setShowForm(false);
   };
+
   const handleEdit = (category: Category) => {
     setEditingCategory(category);
     setShowForm(true);
   };
+
   const handleUpdate = async (name: string, description: string) => {
     if (editingCategory) {
       await updateMutation.mutateAsync({
@@ -66,6 +74,7 @@ export function CategoriesManager() {
       });
     }
   };
+
   const handleDelete = async (id: number) => {
     await deleteMutation.mutateAsync({ categoryId: id });
   };
@@ -73,6 +82,7 @@ export function CategoriesManager() {
     setEditingCategory(null);
     setShowForm(false);
   };
+
   if (isLoading) {
     return (
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
@@ -83,6 +93,7 @@ export function CategoriesManager() {
       </div>
     );
   }
+
   if (error) {
     return (
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
@@ -94,6 +105,7 @@ export function CategoriesManager() {
       </div>
     );
   }
+  
   return (
     <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-12">

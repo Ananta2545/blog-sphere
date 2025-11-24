@@ -1,11 +1,13 @@
 import { LucideIcon } from 'lucide-react';
 import { cn } from '@/app/lib/utils';
+
 interface StatsCardProps {
   label: string;
   value: string;
   icon: LucideIcon;
   color: 'emerald' | 'green' | 'orange' | 'purple' | 'blue';
 }
+
 const colorStyles = {
   emerald: {
     bg: 'bg-gradient-to-br from-emerald-500 to-emerald-600',
@@ -33,6 +35,7 @@ const colorStyles = {
     iconColor: 'text-white',
   },
 };
+
 export function StatsCard({ label, value, icon: Icon, color }: StatsCardProps) {
   const styles = colorStyles[color];
   return (

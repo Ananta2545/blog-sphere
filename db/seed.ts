@@ -1,5 +1,6 @@
 import { db } from "./drizzle.js";
 import { categories } from "./schema/index.js";
+
 function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -8,8 +9,9 @@ function slugify(text: string): string {
     .replace(/--+/g, '-')
     .trim();
 }
+
 async function seed() {
-  console.log("ðŸŒ± Starting database seeding...\n");
+  console.log("Starting database seeding...\n");
   try {
     console.log("ðŸ“ Creating categories...");
     const categoryData = [
@@ -42,6 +44,7 @@ async function seed() {
         description: "Business strategies, entrepreneurship, and career advice",
       },
     ];
+
     const createdCategories = await Promise.all(
       categoryData.map(async (cat) => {
         const [category] = await db
@@ -55,19 +58,21 @@ async function seed() {
         return category;
       })
     );
-    console.log(`âœ… Created ${createdCategories.length} categories\n`);
-    console.log("ðŸ“ No sample posts created - database ready for user content\n");
+    
+    console.log(`Created ${createdCategories.length} categories\n`);
+    console.log("No sample posts created - database ready for user content\n");
     const createdPosts = [];
-    console.log(`âœ… No sample posts created\n`);
-    console.log("ðŸŽ‰ Seeding completed successfully!\n");
-    console.log("ðŸ“Š Summary:");
+    console.log(`No sample posts created\n`);
+    console.log("Seeding completed successfully!\n");
+    console.log("Summary:");
     console.log(`  - ${createdCategories.length} categories`);
     console.log(`  - ${createdPosts.length} posts`);
     console.log(`  - Database is ready for user-generated content`);
   } catch (error) {
-    console.error("âŒ Seeding failed:", error);
+    console.error("Seeding failed:", error);
     process.exit(1);
   }
   process.exit(0);
 }
+
 seed();

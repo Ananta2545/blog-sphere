@@ -4,6 +4,7 @@ import { Moon, Sun, BookOpen, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from '@/app/store/useAppStore';
 import { usePathname } from 'next/navigation';
+
 export function Navbar() {
   const [mounted] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -15,6 +16,7 @@ export function Navbar() {
     { href: '/dashboard', label: 'Dashboard' },
     { href: '/categories', label: 'Categories' },
   ];
+  
   return (
     <header className="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-gray-100 dark:border-slate-800 transition-colors">
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">

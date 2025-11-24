@@ -1,5 +1,6 @@
 import { Button } from '@/app/components/ui/Button';
 import Link from 'next/link';
+
 export function HeroSection() {
   return (
     <section className="bg-linear-to-b from-teal-50/30 via-cyan-50/20 to-white dark:from-slate-900 dark:via-slate-900/95 dark:to-slate-900 pt-20 pb-28 transition-colors">

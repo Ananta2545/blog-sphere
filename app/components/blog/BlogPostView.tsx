@@ -2,13 +2,16 @@
 import Link from 'next/link';
 import { ArrowLeft, Calendar, Clock, Tag, Edit, Loader2, Eye } from 'lucide-react';
 import { trpc } from '@/app/_trpc/client';
+
 interface BlogPostViewProps {
   postId: string;
 }
 export function BlogPostView({ postId }: BlogPostViewProps) {
+
   const { data: post, isLoading, error } = trpc.post.getById.useQuery({ 
     postId: parseInt(postId) 
   });
+
   if (isLoading) {
     return (
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
@@ -19,6 +22,7 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
       </div>
     );
   }
+
   if (error || !post) {
     const isDraftError = error?.message?.includes('not published');
     return (
@@ -61,11 +65,13 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
       </div>
     );
   }
+
   const formattedDate = new Date(post.createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   });
+  
   return (
     <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex items-center justify-between mb-8">

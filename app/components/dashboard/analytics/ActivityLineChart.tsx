@@ -24,6 +24,7 @@ ChartJS.register(
   Legend,
   Filler
 );
+
 export function ActivityLineChart() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
@@ -32,6 +33,7 @@ export function ActivityLineChart() {
     limit: 100,
     status: 'ALL',
   });
+
   if (isLoading) {
     return (
       <div className="bg-white dark:bg-slate-700 rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-slate-600">
@@ -44,19 +46,23 @@ export function ActivityLineChart() {
       </div>
     );
   }
+
   const last7Days = Array.from({ length: 7 }, (_, i) => {
     const date = new Date();
     date.setDate(date.getDate() - (6 - i));
     return date;
   });
+
   const labels = last7Days.map(date =>
     date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
   );
+
   const posts = postsData?.posts ?? [];
   const countsPerDay = last7Days.map(date => {
     const dateStr = date.toISOString().split('T')[0];
     return posts.filter(post => new Date(post.createdAt).toISOString().split('T')[0] === dateStr).length;
   });
+
   const data = {
     labels,
     datasets: [
@@ -76,6 +82,7 @@ export function ActivityLineChart() {
       },
     ],
   };
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -117,6 +124,7 @@ export function ActivityLineChart() {
       },
     },
   };
+  
   return (
     <div className="bg-white dark:bg-slate-700 rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-slate-600 dark:text-white">
       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">

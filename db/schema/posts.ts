@@ -1,7 +1,9 @@
 import { pgTable, serial, varchar, text, integer, timestamp, pgEnum } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { postCategories } from "./postCategories";
+
 export const postStatusEnum = pgEnum("status", ["DRAFT", "PUBLISHED"]);
+
 export const posts = pgTable("posts", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
@@ -13,6 +15,7 @@ export const posts = pgTable("posts", {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
+
 export const postsRelations = relations(posts, ({ many }) => ({
   postCategories: many(postCategories),
 }));

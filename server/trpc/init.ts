@@ -1,5 +1,6 @@
 import { initTRPC } from "@trpc/server";
 import { Context } from "./context";
+
 const t = initTRPC.context<Context>().create({
   errorFormatter({ shape, error }) {
     return {
@@ -14,8 +15,10 @@ const t = initTRPC.context<Context>().create({
     };
   },
 });
+
 export const router = t.router;
 export const publicProcedure = t.procedure;
+
 export const loggerMiddleware = t.middleware(async ({ path, type, next }) => {
   const start = Date.now();
   const result = await next();
@@ -23,6 +26,7 @@ export const loggerMiddleware = t.middleware(async ({ path, type, next }) => {
   console.log(`[tRPC] ${type} ${path} - ${durationMs}ms`);
   return result;
 });
+
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
   return next({
     ctx: {

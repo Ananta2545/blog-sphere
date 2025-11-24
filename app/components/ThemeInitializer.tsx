@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef } from 'react';
 import { useAppStore } from '../store/useAppStore';
+
 export function ThemeInitializer() {
   const initialized = useRef(false);
   useEffect(() => {

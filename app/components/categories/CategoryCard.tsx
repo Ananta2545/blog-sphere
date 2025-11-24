@@ -2,17 +2,21 @@
 import { useState } from 'react';
 import { Folder, Edit, Trash2 } from 'lucide-react';
 import { Category } from './CategoriesManager';
+
 interface CategoryCardProps {
   category: Category;
   onEdit: (category: Category) => void;
   onDelete: (id: number) => void;
 }
+
 export function CategoryCard({ category, onEdit, onDelete }: CategoryCardProps) {
+  
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const handleDelete = () => {
     onDelete(category.id);
     setShowDeleteConfirm(false);
   };
+
   return (
     <div className="bg-gray-50 dark:bg-slate-700 rounded-xl p-4 border border-gray-200 dark:border-slate-600 hover:border-teal-300 dark:hover:border-teal-500 transition-all duration-300 group">
       {}

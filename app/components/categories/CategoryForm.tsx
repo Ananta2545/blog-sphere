@@ -2,15 +2,19 @@
 import { useState, useEffect } from 'react';
 import { Save, X, Loader2 } from 'lucide-react';
 import { Category } from './CategoriesManager';
+
 interface CategoryFormProps {
   onSubmit: (name: string, description: string) => void;
   onCancel?: () => void;
   editingCategory?: Category | null;
   isLoading?: boolean;
 }
+
 export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }: CategoryFormProps) {
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
   useEffect(() => {
     if (editingCategory) {
       setName(editingCategory.name);
@@ -20,6 +24,7 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
       setDescription('');
     }
   }, [editingCategory]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
@@ -30,6 +35,7 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
       }
     }
   };
+
   const handleCancel = () => {
     setName('');
     setDescription('');
@@ -37,6 +43,7 @@ export function CategoryForm({ onSubmit, onCancel, editingCategory, isLoading }:
       onCancel();
     }
   };
+  
   return (
     <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-700 p-6 sticky top-20 transition-colors">
       <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">

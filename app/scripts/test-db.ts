@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { Client } from "pg";
+
 async function testDB() {
   if (!process.env.DATABASE_URL) {
     console.error("âŒ DATABASE_URL is missing!");
@@ -19,4 +20,5 @@ async function testDB() {
     await client.end();
   }
 }
+
 testDB();

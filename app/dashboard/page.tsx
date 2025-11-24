@@ -6,6 +6,7 @@ import { PostEditorTab } from '@/app/components/dashboard/PostEditorTab';
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 type TabType = 'analytics' | 'post-editor';
+
 function DashboardContent() {
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab');
@@ -14,6 +15,7 @@ function DashboardContent() {
     if (postIdParam) return 'post-editor';
     return (tabParam as TabType) || 'analytics';
   });
+
   useEffect(() => {
     if (postIdParam) {
       setActiveTab('post-editor');
@@ -21,6 +23,7 @@ function DashboardContent() {
       setActiveTab(tabParam as TabType);
     }
   }, [tabParam, postIdParam]);
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-slate-900 transition-colors">
       {}
@@ -38,6 +41,7 @@ function DashboardContent() {
     </div>
   );
 }
+
 export default function DashboardPage() {
   return (
     <Suspense fallback={

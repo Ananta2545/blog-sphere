@@ -6,13 +6,16 @@ import { StatusPieChart } from './analytics/StatusPieChart';
 import { ActivityLineChart } from './analytics/ActivityLineChart';
 import { CategoryDistributionChart } from './analytics/CategoryDistributionChart';
 import { trpc } from '@/app/_trpc/client';
+
 export function AnalyticsTab() {
   const { data: statsData, isLoading } = trpc.post.getStats.useQuery();
+
   const { data: postsData } = trpc.post.getAll.useQuery({
     page: 1,
     limit: 100,
     status: 'ALL',
   });
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -20,12 +23,14 @@ export function AnalyticsTab() {
       </div>
     );
   }
+
   const avgReadTime = postsData?.posts?.length
     ? Math.round(
         postsData.posts.reduce((sum, post) => sum + (post.readingTimeMins || 0), 0) /
           postsData.posts.length
       )
     : 0;
+
   const stats = [
     {
       label: 'Total Posts',
@@ -58,6 +63,7 @@ export function AnalyticsTab() {
       color: 'blue' as const,
     },
   ];
+  
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">

@@ -5,9 +5,11 @@ import { trpc } from '@/app/_trpc/client';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/app/components/ui/ToastContainer';
 import { useState } from 'react';
+
 interface BlogPreviewProps {
   postId: string;
 }
+
 export function BlogPreview({ postId }: BlogPreviewProps) {
   const router = useRouter();
   const { showToast } = useToast();
@@ -15,6 +17,7 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
   const { data: post, isLoading, error } = trpc.post.getByIdIncludingDrafts.useQuery({ 
     postId: parseInt(postId) 
   });
+
   const utils = trpc.useUtils();
   const updateMutation = trpc.post.update.useMutation({
     onSuccess: () => {
@@ -24,6 +27,7 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
       utils.post.getStats.invalidate();
     },
   });
+
   const handlePublish = async () => {
     if (!post) return;
     setIsPublishing(true);
@@ -47,6 +51,7 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
       setIsPublishing(false);
     }
   };
+
   if (isLoading) {
     return (
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
@@ -57,6 +62,7 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
       </div>
     );
   }
+
   if (error || !post) {
     return (
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
@@ -76,12 +82,14 @@ export function BlogPreview({ postId }: BlogPreviewProps) {
       </div>
     );
   }
+
   const isDraft = post.status === 'DRAFT';
   const formattedDate = new Date(post.createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   });
+  
   return (
     <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
       {}

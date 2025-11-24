@@ -17,6 +17,7 @@ import Image from '@tiptap/extension-image';
 import Placeholder from '@tiptap/extension-placeholder';
 import { trpc } from '@/app/_trpc/client';
 import { useEditorState } from '@/app/store/useAppStore';
+
 export function PostEditorTab() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -41,6 +42,7 @@ export function PostEditorTab() {
     setReadingTimeMins,
     resetEditor,
   } = useEditorState();
+
   const utils = trpc.useUtils();
   const { data: postData, isLoading: postLoading } = trpc.post.getByIdIncludingDrafts.useQuery(
     { postId: postId! },
@@ -56,6 +58,7 @@ export function PostEditorTab() {
       console.error('Create mutation error:', error);
     },
   });
+
   const updateMutation = trpc.post.update.useMutation({
     onSuccess: () => {
       utils.post.getAll.invalidate();
@@ -64,6 +67,7 @@ export function PostEditorTab() {
       utils.post.getStats.invalidate();
     },
   });
+
   const editor = useEditor({
     immediatelyRender: false,
     editable: true,
@@ -91,11 +95,13 @@ export function PostEditorTab() {
         class: 'prose prose-lg max-w-none focus:outline-none text-gray-900 dark:text-gray-100 dark:prose-invert',
       },
     },
+
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       setContent(html);
     },
   });
+
   useEffect(() => {
     if (postData && postId) {
       setEditingPost(postId);
@@ -114,6 +120,7 @@ export function PostEditorTab() {
       }
     }
   }, [postData, postId]);
+
   useEffect(() => {
     if (editor && !editor.isDestroyed && content) {
       const currentContent = editor.getHTML();
@@ -122,6 +129,7 @@ export function PostEditorTab() {
       }
     }
   }, [editor]);
+
   const handleSave = async (publishNow: boolean = false) => {
     if (!title || !title.trim()) {
       showToast('Please enter a title', 'error');
@@ -142,6 +150,7 @@ export function PostEditorTab() {
       readingTimeMins: readingTimeMins,
       categoryIds: selectedCategoryIds.length > 0 ? selectedCategoryIds : [],
     };
+
     try {
       if (editingPostId && postId) {
         await updateMutation.mutateAsync({
@@ -185,6 +194,7 @@ export function PostEditorTab() {
       setPublishing(false);
     }
   };
+
   const handlePublish = () => handleSave(true);
   if (postLoading) {
     return (
@@ -196,6 +206,7 @@ export function PostEditorTab() {
       </div>
     );
   }
+  
   return (
     <div className="bg-white dark:bg-slate-800 rounded-lg shadow dark:shadow-slate-900/50 transition-colors">
       <div className="border-b border-gray-200 dark:border-slate-700 px-3 sm:px-4 md:px-6 py-3 sm:py-4 transition-colors">

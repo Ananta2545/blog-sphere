@@ -1,14 +1,15 @@
 import { db, testConnection } from "./drizzle";
 import { sql } from "drizzle-orm";
+
 async function migrate() {
-  console.log("ðŸš€ Starting database migration...\n");
+  
   const connected = await testConnection();
   if (!connected) {
     console.error("Cannot migrate: Database connection failed");
     process.exit(1);
   }
   try {
-    console.log("ðŸ“ Creating tables...");
+    console.log("Creating tables...");
     await db.execute(sql`
       DO $$ BEGIN
         CREATE TYPE status AS ENUM ('DRAFT', 'PUBLISHED');
@@ -68,14 +69,14 @@ async function migrate() {
         FOR EACH ROW
         EXECUTE FUNCTION update_updated_at_column();
     `);
-    console.log("âœ… Migration completed successfully!\n");
-    console.log("ðŸ“Š Tables created:");
+    console.log("Migration completed successfully!\n");
+    console.log("Tables created:");
     console.log("  - posts");
     console.log("  - categories");
     console.log("  - post_categories");
-    console.log("\nðŸŽ‰ Database is ready to use!");
+    console.log("\nDatabase is ready to use!");
   } catch (error) {
-    console.error("âŒ Migration failed:", error);
+    console.error("Migration failed:", error);
     process.exit(1);
   }
   process.exit(0);

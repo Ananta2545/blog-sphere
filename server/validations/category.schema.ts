@@ -1,4 +1,5 @@
 import { z } from "zod";
+
 export const createCategorySchema = z.object({
   name: z
     .string()
@@ -11,6 +12,7 @@ export const createCategorySchema = z.object({
     .trim()
     .optional(),
 });
+
 export const updateCategorySchema = z.object({
   categoryId: z.number().int().positive("Category ID must be a positive integer"),
   name: z
@@ -25,6 +27,7 @@ export const updateCategorySchema = z.object({
     .trim()
     .optional(),
 });
+
 export const getCategoryBySlugSchema = z.object({
   slug: z.string().min(1, "Slug is required"),
 });

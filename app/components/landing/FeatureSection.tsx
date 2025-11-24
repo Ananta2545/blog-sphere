@@ -1,11 +1,13 @@
 import { Bolt, BookOpen, LayoutDashboard, Shield, Globe, Moon } from 'lucide-react';
 import { cn } from '@/app/lib/utils';
+
 interface FeatureCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
   bgColor: string;
 }
+
 const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description, bgColor }) => (
   <div className="rounded-xl bg-white dark:bg-slate-800 p-8 shadow-lg dark:shadow-slate-900/50 transition-all duration-300 hover:shadow-xl dark:hover:shadow-slate-900/70 border border-transparent dark:border-slate-700">
     <div className={cn('flex h-12 w-12 items-center justify-center rounded-xl text-white shadow-lg dark:shadow-teal-500/30', bgColor)}>
@@ -15,6 +17,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description, bgC
     <p className="mt-3 text-base text-gray-600 dark:text-gray-400">{description}</p>
   </div>
 );
+
 const features = [
   {
     icon: <Bolt className="h-6 w-6" />,
@@ -53,6 +56,7 @@ const features = [
     bgColor: 'bg-teal-600',
   },
 ];
+
 export function FeatureSection() {
   return (
     <section className="py-20 sm:py-28 bg-white dark:bg-slate-900 transition-colors">

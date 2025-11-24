@@ -1,5 +1,6 @@
 import { db } from '@/db/drizzle';
 import { posts } from '@/db/schema';
+
 async function checkPosts() {
   try {
     const allPosts = await db.select().from(posts);
@@ -20,4 +21,5 @@ async function checkPosts() {
     process.exit(0);
   }
 }
+
 checkPosts();

@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+
 interface EditorState {
   editingPostId: number | null;
   title: string;
@@ -15,6 +16,7 @@ interface EditorState {
   setReadingTimeMins: (mins: number) => void;
   resetEditor: () => void;
 }
+
 interface UIState {
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
@@ -24,6 +26,7 @@ interface UIState {
   toggleTheme: () => void;
   setTheme: (theme: 'light' | 'dark') => void;
 }
+
 interface FilterState {
   searchQuery: string;
   selectedCategorySlug: string | null;
@@ -35,7 +38,9 @@ interface FilterState {
   setCurrentPage: (page: number) => void;
   resetFilters: () => void;
 }
+
 interface AppStore extends EditorState, UIState, FilterState {}
+
 export const useAppStore = create<AppStore>()(
   devtools((set) => ({
     editingPostId: null,
@@ -96,6 +101,7 @@ export const useAppStore = create<AppStore>()(
     }),
   }))
 );
+
 import { useShallow } from 'zustand/react/shallow';
 export const useEditorState = () => useAppStore(
   useShallow((state) => ({
@@ -114,6 +120,7 @@ export const useEditorState = () => useAppStore(
     resetEditor: state.resetEditor,
   }))
 );
+
 export const useFilterState = () => useAppStore(
   useShallow((state) => ({
     searchQuery: state.searchQuery,
@@ -127,6 +134,7 @@ export const useFilterState = () => useAppStore(
     resetFilters: state.resetFilters,
   }))
 );
+
 export const useUIState = () => useAppStore(
   useShallow((state) => ({
     isSidebarOpen: state.isSidebarOpen,
@@ -138,6 +146,7 @@ export const useUIState = () => useAppStore(
     setTheme: state.setTheme,
   }))
 );
+
 export const useTheme = () => useAppStore(
   useShallow((state) => ({
     theme: state.theme,

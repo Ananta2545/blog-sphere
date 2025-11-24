@@ -12,6 +12,7 @@ import { eq, desc, and, or, like, sql, count } from "drizzle-orm";
 import { slugify } from "../utils/slugify";
 import { getStats } from "../utils/readingTime";
 import { TRPCError } from "@trpc/server";
+
 export const postRouter = router({
   getAll: publicProcedure
     .input(getPostsFilterSchema.optional().transform((val) => val ?? { page: 1, limit: 10, status: 'PUBLISHED' as const }))
@@ -19,9 +20,11 @@ export const postRouter = router({
       const { categorySlug, searchQuery, page, limit, status } = input;
       const offset = (page - 1) * limit;
       const conditions = [];
+
       if (status !== "ALL") {
         conditions.push(eq(posts.status, status));
       }
+
       if (searchQuery) {
         conditions.push(
           or(
@@ -30,7 +33,9 @@ export const postRouter = router({
           )
         );
       }
+
       let postsData;
+
       if (categorySlug) {
         postsData = await ctx.db
           .select({
@@ -71,10 +76,12 @@ export const postRouter = router({
           .limit(limit)
           .offset(offset);
       }
+
       const [totalResult] = await ctx.db
         .select({ count: count() })
         .from(posts)
         .where(conditions.length > 0 ? and(...conditions) : undefined);
+
       const total = totalResult?.count || 0;
       const postsWithCategories = await Promise.all(
         postsData.map(async (post) => {
@@ -93,6 +100,7 @@ export const postRouter = router({
           };
         })
       );
+
       return {
         posts: postsWithCategories,
         pagination: {
@@ -103,11 +111,13 @@ export const postRouter = router({
         },
       };
     }),
+
   getAllForDashboard: publicProcedure.query(async ({ ctx }) => {
     const postsData = await ctx.db
       .select()
       .from(posts)
       .orderBy(desc(posts.createdAt));
+
     const postsWithCategories = await Promise.all(
       postsData.map(async (post) => {
         const postCats = await ctx.db
@@ -127,6 +137,7 @@ export const postRouter = router({
     );
     return postsWithCategories;
   }),
+
   getSingle: publicProcedure
     .input(getPostBySlugSchema)
     .query(async ({ ctx, input }) => {
@@ -141,6 +152,7 @@ export const postRouter = router({
           message: "Post not found",
         });
       }
+      
       const postCats = await ctx.db
         .select({
           id: categories.id,
@@ -170,6 +182,7 @@ export const postRouter = router({
           message: "Post not found or not published yet",
         });
       }
+
       const postCats = await ctx.db
         .select({
           id: categories.id,
@@ -184,6 +197,7 @@ export const postRouter = router({
         categories: postCats,
       };
     }),
+
   getByIdIncludingDrafts: publicProcedure
     .input(getPostByIdSchema)
     .query(async ({ ctx, input }) => {
@@ -198,6 +212,7 @@ export const postRouter = router({
           message: "Post not found",
         });
       }
+
       const postCats = await ctx.db
         .select({
           id: categories.id,
@@ -212,6 +227,7 @@ export const postRouter = router({
         categories: postCats,
       };
     }),
+
   create: publicProcedure
     .input(createPostSchema)
     .mutation(async ({ ctx, input }) => {
@@ -222,6 +238,7 @@ export const postRouter = router({
           message: "Input is undefined",
         });
       }
+
       const slug = slugify(input.title);
       const existingPost = await ctx.db
         .select()
@@ -234,6 +251,7 @@ export const postRouter = router({
           message: "A post with this title already exists",
         });
       }
+
       const { wordCount } = getStats(input.content);
       const readingTimeMins = input.readingTimeMins || 1;
       const [post] = await ctx.db
@@ -257,6 +275,7 @@ export const postRouter = router({
       }
       return post;
     }),
+
   update: publicProcedure
     .input(updatePostSchema)
     .mutation(async ({ ctx, input }) => {
@@ -272,6 +291,7 @@ export const postRouter = router({
           message: "Post not found",
         });
       }
+
       const updateFields: {
         title?: string;
         content?: string;
@@ -303,6 +323,7 @@ export const postRouter = router({
         }
         updateFields.slug = newSlug;
       }
+
       updateFields.updatedAt = new Date();
       const [updatedPost] = await ctx.db
         .update(posts)
@@ -324,6 +345,7 @@ export const postRouter = router({
       }
       return updatedPost;
     }),
+
   delete: publicProcedure
     .input(deletePostSchema)
     .mutation(async ({ ctx, input }) => {
@@ -341,6 +363,7 @@ export const postRouter = router({
       await ctx.db.delete(posts).where(eq(posts.id, input.postId));
       return { success: true, message: "Post deleted successfully" };
     }),
+    
   getStats: publicProcedure.query(async ({ ctx }) => {
     const [totalPosts] = await ctx.db
       .select({ count: count() })

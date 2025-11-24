@@ -4,18 +4,22 @@ import "./globals.css";
 import { ClientProviders } from "./components/ClientProviders";
 import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
 export const metadata: Metadata = {
   title: "BlogSphere - Modern Blogging Platform",
   description: "Create and manage your blog with ease",
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{

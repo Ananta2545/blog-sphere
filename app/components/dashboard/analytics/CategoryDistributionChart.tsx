@@ -24,6 +24,7 @@ export function CategoryDistributionChart() {
   const { data: categories, isLoading } = trpc.category.getAll.useQuery();
 
   if (isLoading) {
+
     return (
       <div className="bg-white dark:bg-slate-700 rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-slate-600">
         <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">
@@ -108,6 +109,7 @@ export function CategoryDistributionChart() {
   };
 
   return (
+    
     <div className="bg-white dark:bg-slate-700 rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-slate-600 dark:text-white">
       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
         Category Distribution

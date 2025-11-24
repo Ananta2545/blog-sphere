@@ -13,12 +13,14 @@ import { Bar } from 'react-chartjs-2';
 import { trpc } from '@/app/_trpc/client';
 import { Loader2 } from 'lucide-react';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
 export function CategoryBarChart() {
   const { data: categories, isLoading } = trpc.category.getAll.useQuery();
   const chartRef = useRef(null);
   const isDark =
     typeof window !== 'undefined' &&
     document.documentElement.classList.contains('dark');
+
   if (isLoading) {
     return (
       <div className="bg-white dark:bg-slate-700 rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-slate-600">
@@ -31,9 +33,11 @@ export function CategoryBarChart() {
       </div>
     );
   }
+
   const categoryData = Array.isArray(categories) ? categories : [];
   const labels = categoryData.map(cat => cat.name);
   const counts = categoryData.map(cat => cat.postCount || 0);
+
   const data = {
     labels: labels.length > 0 ? labels : ['No categories'],
     datasets: [
@@ -46,6 +50,7 @@ export function CategoryBarChart() {
       },
     ],
   };
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -79,6 +84,7 @@ export function CategoryBarChart() {
       },
     },
   };
+  
   return (
     <div className="bg-white dark:bg-slate-700 rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-slate-600 transition-colors">
       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">

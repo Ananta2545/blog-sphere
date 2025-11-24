@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { Calendar, Clock, Tag, Edit, Trash2, Eye } from 'lucide-react';
+
 interface BlogCardProps {
   blog: {
     id: number;
@@ -13,13 +14,17 @@ interface BlogCardProps {
   };
   onDelete?: (id: number) => void;
 }
+
 export function BlogCard({ blog, onDelete }: BlogCardProps) {
+
   const isDraft = blog.status === 'draft';
+
   const handleDelete = () => {
     if (onDelete) {
       onDelete(blog.id);
     }
   };
+  
   return (
     <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-lg dark:shadow-slate-900/50 dark:hover:shadow-slate-900/70 transition-all duration-300 border border-gray-100 dark:border-slate-700 overflow-hidden group">
       {}

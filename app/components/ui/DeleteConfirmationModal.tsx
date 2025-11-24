@@ -1,6 +1,7 @@
 'use client';
 import { X, AlertTriangle } from 'lucide-react';
 import { useEffect } from 'react';
+
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -11,6 +12,7 @@ interface DeleteConfirmationModalProps {
   cancelText?: string;
   isDeleting?: boolean;
 }
+
 export function DeleteConfirmationModal({
   isOpen,
   onClose,

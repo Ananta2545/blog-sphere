@@ -21,15 +21,18 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type { Editor } from '@tiptap/react';
+
 interface EditorToolbarProps {
   editor: Editor | null;
 }
+
 interface ToolButtonProps {
   icon: LucideIcon;
   label: string;
   onClick: () => void;
   isActive?: boolean;
 }
+
 const ToolButton = ({ 
   icon: Icon, 
   label, 
@@ -49,6 +52,7 @@ const ToolButton = ({
     <Icon className="w-5 h-5" />
   </button>
 );
+
 export function EditorToolbar({ editor }: EditorToolbarProps) {
   const [, setUpdate] = useState(0);
   useEffect(() => {
@@ -61,21 +65,25 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
       editor.off('transaction', handleUpdate);
     };
   }, [editor]);
+
   if (!editor) {
     return null;
   }
+
   const addLink = () => {
     const url = window.prompt('Enter URL:');
     if (url) {
       editor.chain().focus().setLink({ href: url }).run();
     }
   };
+
   const addImage = () => {
     const url = window.prompt('Enter image URL:');
     if (url) {
       editor.chain().focus().setImage({ src: url }).run();
     }
   };
+  
   return (
     <div className="p-3 flex flex-wrap gap-1 bg-gray-50 dark:bg-slate-700 border-b border-gray-200 dark:border-slate-600 transition-colors">
       <div className="flex gap-1 border-r border-gray-300 dark:border-slate-600 pr-2">

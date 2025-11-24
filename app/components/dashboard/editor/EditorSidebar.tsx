@@ -1,10 +1,12 @@
 import { Folder, Calendar, Clock } from 'lucide-react';
+
 interface Category {
   id: number;
   name: string;
   slug: string;
   postCount: number;
 }
+
 interface EditorSidebarProps {
   categories: Category[];
   selectedCategoryIds: number[];
@@ -14,6 +16,7 @@ interface EditorSidebarProps {
   readingTimeMins: number;
   onReadingTimeChange: (mins: number) => void;
 }
+
 export function EditorSidebar({
   categories,
   selectedCategoryIds,
@@ -30,6 +33,7 @@ export function EditorSidebar({
       onCategoryChange([...selectedCategoryIds, categoryId]);
     }
   };
+  
   return (
     <div className="space-y-6">
       <div className="bg-gray-50 dark:bg-slate-700 rounded-lg p-4 border border-gray-200 dark:border-slate-600 transition-colors">

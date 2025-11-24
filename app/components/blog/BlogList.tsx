@@ -9,6 +9,7 @@ import { useFilterState } from '@/app/store/useAppStore';
 import { useMemo, useState, useEffect } from 'react';
 import { useToast } from '@/app/components/ui/ToastContainer';
 import { useRouter } from 'next/navigation';
+
 export function BlogList() {
   const router = useRouter();
   const { showToast } = useToast();
@@ -43,10 +44,14 @@ export function BlogList() {
     limit: 9,
     status: (statusFilter === 'all' ? 'ALL' : statusFilter) as 'DRAFT' | 'PUBLISHED' | 'ALL',
   };
+
   if (selectedCategorySlug) queryInput.categorySlug = selectedCategorySlug;
+
   if (debouncedSearchQuery) queryInput.searchQuery = debouncedSearchQuery;
+
   const { data: postsData, isLoading: postsLoading, error: postsError} = trpc.post.getAll.useQuery(queryInput);
   const utils = trpc.useUtils();
+
   const deletePostMutation = trpc.post.delete.useMutation({
     onSuccess: () => {
       showToast('Post deleted successfully!', 'success');
@@ -59,6 +64,7 @@ export function BlogList() {
       showToast(`Failed to delete post: ${error.message}`, 'error');
     },
   });
+
   const categories = useMemo(() => {
     if (!categoriesData || !Array.isArray(categoriesData)) return ['All'];
     return ['All', ...categoriesData.map(cat => cat.name)];
@@ -69,6 +75,7 @@ export function BlogList() {
       categoriesData.map(cat => [cat.name, cat.slug])
     );
   }, [categoriesData]);
+
   const handleCategoryChange = (categoryName: string) => {
     if (categoryName === 'All') {
       setSelectedCategorySlug(null);
@@ -76,6 +83,7 @@ export function BlogList() {
       setSelectedCategorySlug(categoryNameToSlug[categoryName] || null);
     }
   };
+
   const handleDelete = (id: number) => {
     const post = posts.find(p => p.id === id);
     if (post) {
@@ -83,17 +91,22 @@ export function BlogList() {
       setDeleteModalOpen(true);
     }
   };
+
   const confirmDelete = async () => {
     if (!postToDelete) return;
     await deletePostMutation.mutateAsync({ postId: postToDelete.id });
   };
+
   const selectedCategoryName = useMemo(() => {
     if (!selectedCategorySlug) return 'All';
     const category = categoriesData?.find(cat => cat.slug === selectedCategorySlug);
     return category?.name || 'All';
   }, [selectedCategorySlug, categoriesData]);
+
   const posts = postsData?.posts || [];
+
   const totalPosts = postsData?.pagination?.total || 0;
+  
   return (
     <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">

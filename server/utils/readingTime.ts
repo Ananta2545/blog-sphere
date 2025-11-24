@@ -5,6 +5,7 @@ export const getStats = (
   if (!content || content.trim().length === 0) {
     return { wordCount: 0, readingTimeMins: 0 };
   }
+
   const cleanContent = content
     .replace(/```[\s\S]*?```/g, "") 
     .replace(/`[^`]*`/g, "")         
@@ -14,6 +15,7 @@ export const getStats = (
     .replace(/!\[([^\]]*)\]\([^\)]+\)/g, "") 
     .replace(/<[^>]+>/g, "")         
     .trim();
+
   const words = cleanContent.split(/\s+/).filter((word) => word.length > 0);
   const wordCount = words.length;
   const readingTimeMins = wordCount > 0 
@@ -24,6 +26,7 @@ export const getStats = (
     readingTimeMins,
   };
 };
+
 export const formatReadingTime = (minutes: number): string => {
   if (minutes < 1) return "< 1 min read";
   if (minutes === 1) return "1 min read";

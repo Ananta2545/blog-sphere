@@ -1,5 +1,6 @@
 import { Button } from '@/app/components/ui/Button';
 import Link from 'next/link';
+
 export function CTASection() {
   return (
     <section className="py-20 bg-white dark:bg-slate-900 transition-colors">
