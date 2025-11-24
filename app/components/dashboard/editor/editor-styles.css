@@ -107,6 +107,10 @@
 }
 .ProseMirror strong {
   font-weight: 700;
+  color: #111827;
+}
+.dark .ProseMirror strong {
+  color: #f1f5f9;
 }
 .ProseMirror em {
   font-style: italic;
