@@ -68,14 +68,22 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
   });
   return (
     <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
-      {}
-      <Link
-        href="/blog"
-        className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 font-medium mb-8 transition-colors"
-      >
-        <ArrowLeft className="w-5 h-5" />
-        Back to Blog
-      </Link>
+      <div className="flex items-center justify-between mb-8">
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 font-medium transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          Back to Blog
+        </Link>
+        <Link
+          href={`/dashboard?tab=post-editor&postId=${postId}`}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors cursor-pointer"
+        >
+          <Edit className="w-4 h-4" />
+          Edit Post
+        </Link>
+      </div>
       {}
       {post.status === 'DRAFT' && (
         <div className="mb-4">
@@ -149,16 +157,6 @@ export function BlogPostView({ postId }: BlogPostViewProps) {
             Browse More Posts
           </Link>
         </div>
-      </div>
-      {}
-      <div className="mt-8 text-center">
-        <Link
-          href={`/dashboard?tab=editor&postId=${postId}`}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors duration-300"
-        >
-          <Edit className="w-4 h-4" />
-          Edit Post
-        </Link>
       </div>
     </div>
   );

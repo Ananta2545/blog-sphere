@@ -13,6 +13,7 @@ export interface Category {
 }
 export function CategoriesManager() {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [showForm, setShowForm] = useState(false);
   const { showToast } = useToast();
   const utils = trpc.useUtils();
   const { data: categories, isLoading, error } = trpc.category.getAll.useQuery();
@@ -50,9 +51,11 @@ export function CategoriesManager() {
       name,
       description: description || undefined,
     });
+    setShowForm(false);
   };
   const handleEdit = (category: Category) => {
     setEditingCategory(category);
+    setShowForm(true);
   };
   const handleUpdate = async (name: string, description: string) => {
     if (editingCategory) {
@@ -68,6 +71,7 @@ export function CategoriesManager() {
   };
   const handleCancelEdit = () => {
     setEditingCategory(null);
+    setShowForm(false);
   };
   if (isLoading) {
     return (
@@ -97,22 +101,24 @@ export function CategoriesManager() {
         <p className="text-gray-600 dark:text-gray-400 text-lg">Organize your blog posts with categories</p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {}
-        <div className="lg:col-span-1">
-          <CategoryForm
-            editingCategory={editingCategory}
-            onSubmit={editingCategory ? handleUpdate : handleCreate}
-            onCancel={handleCancelEdit}
-            isLoading={createMutation.isPending || updateMutation.isPending}
-          />
-        </div>
-        {}
-        <div className="lg:col-span-2">
+        {showForm && (
+          <div className="lg:col-span-1">
+            <CategoryForm
+              editingCategory={editingCategory}
+              onSubmit={editingCategory ? handleUpdate : handleCreate}
+              onCancel={handleCancelEdit}
+              isLoading={createMutation.isPending || updateMutation.isPending}
+            />
+          </div>
+        )}
+        <div className={showForm ? "lg:col-span-2" : "lg:col-span-3"}>
           <CategoryList
             categories={categories || []}
             onEdit={handleEdit}
             onDelete={handleDelete}
             isDeleting={deleteMutation.isPending}
+            onAddCategory={() => setShowForm(true)}
+            showForm={showForm}
           />
         </div>
       </div>
