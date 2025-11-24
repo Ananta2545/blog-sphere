@@ -264,7 +264,3 @@ Total development time: Approximately 7 days
 - Email notifications
 - Advanced search with filters
 - Post scheduling
-
-## License
-
-This project is open source and available for educational purposes.
