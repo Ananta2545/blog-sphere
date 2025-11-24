@@ -59,7 +59,7 @@ export function FeatureSection() {
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-fuchsia-600 dark:from-purple-400 dark:to-fuchsia-400 sm:text-4xl inline-flex items-center gap-3">
-            <span className="text-4xl">âš¡</span> Powerful Features <span className="text-4xl">âš¡</span>
+            <span className="text-4xl">💡</span> Powerful Features <span className="text-4xl">💡</span>
           </h2>
           <p className="mt-4 text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Everything you need to create and manage a professional blog. Simple, powerful, and built for the modern web.
